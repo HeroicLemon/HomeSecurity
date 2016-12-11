@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<title>Home Security Monitor</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+    <div class=menubar>
+        <h1>Home Security Monitor</h1>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('settings') }}">Settings</a></li>
+            <li><a href="{{ url_for('eventlog') }}">Event Log</a></li>
+            {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% block body %}{% endblock %}
+</div>

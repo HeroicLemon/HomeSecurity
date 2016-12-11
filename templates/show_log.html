@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% if session.logged_in %}
+        <ul>
+            {% for log in logs %}
+                <li><h2>{{ log.begin_timestamp }} - {{ log.end_timestamp  }}</h2>{{ log.zone }}
+            {% else %}
+                <li>No events have been logged
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

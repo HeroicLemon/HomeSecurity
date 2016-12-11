@@ -1,0 +1,114 @@
+{% extends "layout.html" %}
+{% block body %}
+<table>
+    <tr>
+        <th>Attribute</th>
+        <th>Value</th>
+    </tr>
+    <tr>
+        {# TODO: Probably a better way to do this.  #}
+        <td>Armed Status</td>
+        {% if settings.armed_status == 0 %}
+        <td>Ready</td>
+        {% elif settings.armed_status == 1 %}
+        <td>Armed Away</td>
+        {% elif settings.armed_status == 2 %}
+        <td>Armed Stay</td>
+        {% elif settings.armed_status == 3 %}
+        <td>Fault</td>
+        {% endif %}
+    </tr>
+    <tr>
+        <td>Backlight</td>
+        {% if settings.backlight  %}
+        <td>On</td>
+        {% else %}
+        <td>Off</td>
+        {% endif %}
+    </tr>
+    <tr>
+        <td>Programming Mode</td>
+        {% if settings.programming_mode  %}
+        <td>On</td>
+        {% else %}
+        <td>Off</td>
+        {% endif %}
+    </tr>
+    <tr>
+        <td>Beep Count</td>
+        <td>{{ settings.beep_count }}</td>
+    </tr>
+    <tr>
+        <td>Zone Bypassed</td>
+        {% if settings.zone_bypassed %}  
+        <td>Yes</td>
+        {% else %}
+        <td>No</td>
+        {% endif %}
+    </tr>
+    <tr>
+        <td>AC Power</td>
+        {% if settings.ac_power  %}
+        <td>On</td>
+        {% else %}
+        <td>Off</td>
+        {% endif %}
+    </tr>
+    <tr>
+        <td>Chime Mode</td>
+        {% if settings.backlight  %}
+        <td>On</td>
+        {% else %}
+        <td>Off</td>
+        {% endif %}
+    </tr>
+    <tr>
+        <td>Alarm Occurred</td>
+        {% if settings.alarm_occurred %}  
+        <td>Yes</td>
+        {% else %}
+        <td>No</td>
+        {% endif %}
+    </tr>
+    <tr>
+        <td>Alarm Bell</td>
+        <td>{{ settings.alarm_bell }}</td>
+    </tr>
+    <tr>
+        <td>Battery Low</td>
+        {% if settings.battery_low  %}  
+        <td>Yes</td>
+        {% else %}
+        <td>No</td>
+        {% endif %}
+    </tr>
+    <tr>
+        <td>Entry Delay</td>
+        {% if settings.entry_delay  %}
+        <td>On</td>
+        {% else %}
+        <td>Off</td>
+        {% endif %}
+    </tr>
+    <tr>
+        <td>Fire Alarm</td>
+        {% if settings.fire_alarm  %}
+        <td>On</td>
+        {% else %}
+        <td>Off</td>
+        {% endif %}
+    </tr>
+    <tr>
+        <td>Check Zone</td>
+        <td>{{ settings.check_zone }}</td>
+    </tr>
+    <tr>
+        <td>Perimeter Only</td>
+        {% if settings.perimeter_only %}  
+        <td>On</td>
+        {% else %}
+        <td>Off</td>
+        {% endif %}
+    </tr>
+</table>
+{% endblock %}

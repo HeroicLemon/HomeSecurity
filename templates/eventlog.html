@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if events %}
+    <table>
+        <tr>
+            <th>Zone</th>
+            <th>Type</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+        </tr>
+        {% for event in events %}
+        <tr>
+            <td>{{ event.name }}</td>
+            <td>Fault</td> {# TODO: This should not be hard coded #}
+            <td>{{ event.start_time }}</td>
+            <td>{{ event.end_time }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% endblock %}

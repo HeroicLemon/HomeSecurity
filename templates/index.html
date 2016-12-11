@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if zones %}
+<table>
+    <tr>
+        <th>Zone</th>
+        <th>Status</th>
+    </tr>
+    {% for zone in zones %}
+    <tr>
+        <td>{{ zone.name }}</td>
+        {#TODO: Should include a column for indicating what type (motion, door) each zone is. #}
+        {% if zone.triggered %}
+        {% if "Door" in zone.name %}
+        <td>Open</td>
+        {% else %}
+        <td>Motion Detected</td>
+        {% endif %}
+        {% else %}
+        {% if "Door" in zone.name %}
+        <td>Closed</td>
+        {% else %}
+        <td>No Motion Detected</td>
+        {% endif %}
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+{% endblock %}
