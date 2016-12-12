@@ -46,6 +46,8 @@ class ZoneInfo(Base):
     __tablename__ = 'zoneinfo'
     id = Column(Integer, primary_key = True)
     name = Column(String, nullable = False)
+    # TODO: Look more into enumerations here...for now 0 is door, 1 is motion
+    type = Column(Integer, nullable = False)
     triggered = Column(Integer, nullable = False)
 
 # For logging
@@ -83,12 +85,12 @@ class User(Base):
 def zoneInit():
     if db_session.query(ZoneInfo).count() == 0:
         print("Initializing zones...")
-        zone1 = ZoneInfo(id = 1, name = "Front Door", triggered = 0)
-        zone2 = ZoneInfo(id = 2, name = "Garage Door", triggered = 0)
-        zone3 = ZoneInfo(id = 3, name = "Back Door", triggered = 0)
-        zone4 = ZoneInfo(id = 4, name = "Deck Door", triggered = 0)
-        zone5 = ZoneInfo(id = 5, name = "Basement Motion", triggered = 0)
-        zone6 = ZoneInfo(id = 6, name = "Kitchen Motion", triggered = 0)
+        zone1 = ZoneInfo(id = 1, name = "Front Door", type = 0, triggered = 0)
+        zone2 = ZoneInfo(id = 2, name = "Garage Door", type = 0, triggered = 0)
+        zone3 = ZoneInfo(id = 3, name = "Back Door", type = 0, triggered = 0)
+        zone4 = ZoneInfo(id = 4, name = "Deck Door", type = 0, triggered = 0)
+        zone5 = ZoneInfo(id = 5, name = "Basement Motion", type = 1, triggered = 0)
+        zone6 = ZoneInfo(id = 6, name = "Kitchen Motion", type = 1, triggered = 0)
 
         db_session.add(zone1)
         db_session.add(zone2)
@@ -109,7 +111,29 @@ def adminInit():
         #user.password = bcrypt.hashpw("admin".encode('utf-8'), bcrypt.gensalt()) TODO: IMPLEMENT BCRYPT HERE
         user.password = "admin"
         db_session.add(user)
-        db_session.commit()  
+        db_session.commit() 
+
+# Creates a default entry for the settings
+def settingsInit():
+    if db_session.query(Settings).count() == 0:
+        print("Initializing settings...")
+        settings = Settings()
+        settings.armed_status = 0
+        settings.backlight = 0
+        settings.programming_mode = 0
+        settings.beep_count = 0
+        settings.zone_bypassed = 0
+        settings.ac_power = 0
+        settings.chime_mode = 0
+        settings.alarm_occurred = 0
+        settings.alarm_bell = 0
+        settings.battery_low = 0
+        settings.entry_delay = 0
+        settings.fire_alarm = 0
+        settings.check_zone = 0
+        settings.perimeter_only = 0
+        db_session.add(settings)
+        db_session.commit()
 
 # Create the database and populate it with some defaults         
 engine = create_engine(SQLITE_URL)
@@ -119,3 +143,4 @@ DBSession = sessionmaker(bind=engine)
 db_session = DBSession()
 zoneInit()
 adminInit()
+settingsInit()

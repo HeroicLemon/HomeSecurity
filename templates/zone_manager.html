@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if zones %}
+
+<table>
+    {% for zone in zones %}
+    <tr>
+	    <td><input type="checkbox" id="id_{{ zone.name }}" name="zones" value="{{ zone.id }}"/></td>
+	    <td><label for="id_{{ zone.name }}">{{ zone.name }}</label></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+{% endblock %}

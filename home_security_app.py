@@ -40,6 +40,12 @@ def eventlog():
     events = db_session.query(ZoneInfo).join(EventLog).add_columns(ZoneInfo.name, EventLog.type, EventLog.start_time, EventLog.end_time) 
     return render_template('eventlog.html', events=events)
 
+@app.route('/zone_manager')
+@login_required
+def zone_manager():
+    zones = db_session.query(ZoneInfo).all()
+    return render_template('zone_manager.html', zones=zones)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':

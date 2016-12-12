@@ -54,6 +54,7 @@ def parseMessage( strMessage ):
         if(curZoneInfo.triggered == 0):
             debug_print("Event started for zone " + strZone)
             # Set the appropriate zone to triggered
+            # TODO: Need to handle the case where there is no matching zone ID.
             db_session.query(ZoneInfo).filter_by(id = curZoneInfo.id).update({ZoneInfo.triggered: 1})
         
             # Log the event
