@@ -1,14 +1,28 @@
 {% extends "layout.html" %}
 {% block body %}
 {% if zones %}
+<form action="{{ url_for('zone_manager') }}" method="post">
+    <table>
 
-<table>
-    {% for zone in zones %}
-    <tr>
-	    <td><input type="checkbox" id="id_{{ zone.name }}" name="zones" value="{{ zone.id }}"/></td>
-	    <td><label for="id_{{ zone.name }}">{{ zone.name }}</label></td>
-    </tr>
-    {% endfor %}
-</table>
+	<tr>
+		<th>Selected</th>
+		<th>ID</th>
+       		<th>Name</th>
+       		<th>Type</th>
+	</tr>
+    	 {% for zone in zones %}
+   	 <tr>
+		 <td><input type="checkbox" id="id_{{ zone.name }}" name="zones" value="{{ zone.id }}"></td>
+		 <td>{{ zone.id }}</td>
+		 <td>{{ zone.name }}</td>
+		 <td>{{ zone.type }}</td>
+	 </tr>
+    	 {% endfor %}
+    </table>
+    <input type="submit" value="Delete Selected Zone(s)">
+</form>
 {% endif %}
+<form action="{{ url_for('add_zone') }}">
+	<input type="submit" value="Add Zone"/>
+</form>
 {% endblock %}

@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+<form action="{{ url_for('add_zone') }}" method="post">
+	Zone ID: <input type="number" name="zoneID" min="1" required><br>
+	Zone Name: <input type="text" name="zoneName" required><br>
+	Zone Type: 
+	<select name="zoneType">
+		<option value="0">Door</option>
+		<option value="1">Motion</option>
+	</select>
+	<input type="submit" value="Add">
+</form>
+<form action="{{ url_for('zone_manager') }}">
+	<input type="submit" value="Cancel"/>
+</form>
+{% endblock %}

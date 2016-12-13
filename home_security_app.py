@@ -40,11 +40,32 @@ def eventlog():
     events = db_session.query(ZoneInfo).join(EventLog).add_columns(ZoneInfo.name, EventLog.type, EventLog.start_time, EventLog.end_time) 
     return render_template('eventlog.html', events=events)
 
-@app.route('/zone_manager')
+@app.route('/zone_manager', methods=['GET', 'POST'])
 @login_required
 def zone_manager():
+    if request.method == 'POST':
+        selected_zones = request.form.getlist('zones')
+        debug_print('Deleting: {}'.format(selected_zones))
+        for zoneID in selected_zones:
+            db_session.query(ZoneInfo).filter_by(id=zoneID).delete()
+        db_session.commit()
     zones = db_session.query(ZoneInfo).all()
     return render_template('zone_manager.html', zones=zones)
+
+@app.route('/add_zone', methods=['GET', 'POST'])
+@login_required
+def add_zone():
+    if request.method == 'POST':
+        # TODO: Handle duplicate zones.
+        zoneID = request.form.get('zoneID')
+        zoneName = request.form.get('zoneName')
+        zoneType = request.form.get('zoneType')
+        zone = ZoneInfo(id = zoneID, name = zoneName, type = zoneType, triggered = 0)
+        db_session.add(zone)
+        db_session.commit()
+        return zone_manager()
+    else:
+        return render_template('add_zone.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
