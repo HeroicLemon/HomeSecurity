@@ -1,1 +1,4 @@
 *.sw?
+*.db
+__pycache__/
+*.py[cod]
