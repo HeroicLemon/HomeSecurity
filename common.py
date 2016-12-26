@@ -4,7 +4,8 @@ from enum import Enum
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, func, create_engine
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-
+from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
+import bcrypt
 
 SQLITE_URL = "sqlite:////srv/app/HomeSecurity/home_security.db"
 DEBUG = True
@@ -65,7 +66,19 @@ class User(Base):
     id = Column(Integer, primary_key = True)
     name = Column(String, nullable = False)
     level = Column(Integer, nullable = False, default = 0)
-    password = Column(String, nullable = False)
+    _password = Column(String, nullable = False)
+    
+    # Use bcrypt to handle passwords
+    @hybrid_property
+    def password(self):
+        return self._password
+
+    @password.setter
+    def _set_password(self, plaintextPassword):
+        self._password = bcrypt.hashpw(plaintextPassword.encode('utf-8'), bcrypt.gensalt())
+
+    def verify_password(self, plaintextPassword):
+        return  bcrypt.checkpw(plaintextPassword.encode('utf-8'), self._password)
 
     # Flask-Login functions
     def is_authenticated(self):
@@ -108,7 +121,6 @@ def adminInit():
         user = User()
         user.name = "admin"
         user.level = 1
-        #user.password = bcrypt.hashpw("admin".encode('utf-8'), bcrypt.gensalt()) TODO: IMPLEMENT BCRYPT HERE
         user.password = "admin"
         db_session.add(user)
         db_session.commit() 

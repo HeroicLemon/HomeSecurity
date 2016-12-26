@@ -78,8 +78,9 @@ def login():
         username = request.form['username']
         password = request.form['password']
         debug_print('Checking username and password: username \'' + username + '\', password \'' + password + '\'')
-        registered_user = db_session.query(User).filter_by(name=username,password=password).first()
-        if registered_user is None:
+        registered_user = db_session.query(User).filter_by(name=username).first()
+        # Make sure that the provided user is in the DB and that the password matches.
+        if registered_user is None or registered_user.verify_password(password) is False:
             debug_print('Username or password is invalid')
             flash('Username or Password is invalid', 'error')
             return redirect(url_for('login'))
