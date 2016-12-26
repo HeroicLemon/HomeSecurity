@@ -7,7 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 import bcrypt
 
-SQLITE_URL = "sqlite:////srv/app/HomeSecurity/home_security.db"
+SQLITE_URL = "sqlite:///./home_security.db"
 DEBUG = True
 
 # TODO: Figure out how to get enums working with SQLAlchemy

@@ -56,14 +56,19 @@ def zone_manager():
 @login_required
 def add_zone():
     if request.method == 'POST':
-        # TODO: Handle duplicate zones.
         zoneID = request.form.get('zoneID')
-        zoneName = request.form.get('zoneName')
-        zoneType = request.form.get('zoneType')
-        zone = ZoneInfo(id = zoneID, name = zoneName, type = zoneType, triggered = 0)
-        db_session.add(zone)
-        db_session.commit()
-        return zone_manager()
+        # Make sure that there are no other zones with this ID.
+        zone = db_session.query(ZoneInfo).filter_by(id=zoneID).first()
+        if zone is None:
+            zoneName = request.form.get('zoneName')
+            zoneType = request.form.get('zoneType')
+            zone = ZoneInfo(id = zoneID, name = zoneName, type = zoneType, triggered = 0)
+            db_session.add(zone)
+            db_session.commit()
+            return zone_manager()
+        else:
+            flash('A Zone with that ID already exists')
+            return render_template('add_zone.html')
     else:
         return render_template('add_zone.html')
 

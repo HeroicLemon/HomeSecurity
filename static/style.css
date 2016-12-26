@@ -14,4 +14,9 @@ tr:hover { background-color: lightgray; }
 .loginform input[type=text], input[type=password] { width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: 2px solid gray; border-radius: 8px; }
 .loginform input[type=submit] { width: 100%; background-color: gray; color: white; border: none; border-radius: 8px; padding: 10px 40px; }
 .loginform input[type=submit]:hover { background-color: darkgray;  }
-.loginform label {  font-weight: bold; color: gray;  } 
+.loginform label { font-weight: bold; color: gray;  }
+
+.manageform label { display: inline-block; float: left; clear: left; text-align: right; width: 100px; }
+.manageform input[type="text"], input[type="number"] { display: inline-block; float: left; }
+.manageform input[type="submit"] { display: inline; float: left; clear: left; witdh: 250px;}
+.manageform select { display: inline-block; float: left; }
